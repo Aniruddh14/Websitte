@@ -1,3 +1,7 @@
+<?php 
+session_start();
+$name=$_SESSION['User_id'];
+?>
 <!DOCTYPE html>
 <html>
 
@@ -20,12 +24,10 @@
             </button>
 
             <div class="collapse navbar-collapse justify-content-end" id="my-navbar">
-                <ul class="navbar-nav">
-                    <div class="nav-vl"></div> 
+                <ul class="navbar-nav"> 
                     <div class="button-container col-6">
                         <a href="logout.php" class="btn btn-primary">Logout</a>
                     </div>
-                    <div class="nav-vl"></div>
                 </ul>
             </div>
         </nav>
@@ -43,6 +45,39 @@
         </ol>
     </nav>
 
+    <div class="header sticky-top">
+        <nav class="navbar navbar-expand-md navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#my-navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="my-navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#signup-modal">
+                            <i class="fas fa-user"></i>Payment
+                        </a>
+                    </li>
+                    <div class="nav-vl"></div> 
+                      <li class="nav-item"> 
+                           <a class="nav-link" href="#" data-toggle="modal" data-target="#edit-modal"> 
+                           <i class="fas fa-user"></i>Tenants Details 
+                           </a>
+                      </li> 
+                    <div class="nav-vl"></div>
+                      <li class="nav-item"> 
+                           <a class="nav-link" href="#" data-toggle="modal" data-target="#new-modal"> 
+                           <i class="fas fa-user"></i>Complains/Suggestions
+                           </a>
+                      </li> 
+                    <div class="nav-vl"></div>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    
+
     <div class="page-container">
         <div class="property-card row">
             <div class="content-container col-md-8">
@@ -56,8 +91,26 @@
                         <div class="rent-unit"></div>
                     </div>
                     <div class="button-container col-6">
-                        <a href="#" class="btn btn-primary">View</a>
+                        <!--<a href="https://calendar.google.com/calendar/embed?src=en.indian%23holiday%40group.v.calendar.google.com&ctz=Asia%2FKolkata" class="btn btn-primary">View</a>-->
+                        <button id="toggle" class="btn btn-primary">View</button>
+                       
                     </div>
+                    <div id="third" >
+                        <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FKolkata&src=anV5YWxhbmlydWRkaEBnbWFpbC5jb20&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uaW5kaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%237986CB&color=%2333B679&color=%230B8043" style="border:solid 1px #777" width="700" height="400" frameborder="0" scrolling="no" ></iframe>
+                        </div>
+    
+                        <script>
+                            const targetDiv = document.getElementById("third");
+                                const btn = document.getElementById("toggle");
+                                targetDiv.style.display = "none";
+                                btn.onclick = function () {
+                                if (targetDiv.style.display !== "none") {
+                                    targetDiv.style.display = "none";
+                                } else {
+                                    targetDiv.style.display = "block";
+                                }
+                                };
+                            </script>
                 </div>
             </div>
         </div>
@@ -74,16 +127,71 @@
                         <div class="rent-unit"></div>
                     </div>
                     <div class="button-container col-6">
-                        <a href="#" class="btn btn-primary">View</a>
+                    <button id="toggle1" class="btn btn-primary">View</button>
                     </div>
+                    <div id="fourth" class="table-responsive">
+                        <table class="table table-striped" >
+                            <thead>
+                                <tr class="table-primary">>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Duty</th>
+                                <th scope="col">Phone No.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            <?php
+                                    $db_hostname = "127.0.0.1";
+                                    $db_username = "root";
+                                    $db_password = "";
+                                    $db_name = "website";
+
+                                    $conn = mysqli_connect ($db_hostname, $db_username, $db_password, $db_name);
+                                    if (!$conn){
+                                        echo "Connection failed".mysqli_connect_error();
+                                        exit;
+                                    }
+                                    $selectquery = "select * from workers";
+                                    $query = mysqli_query($conn,$selectquery);
+                                    $num = mysqli_num_rows($query);
+
+
+                                    while($res = mysqli_fetch_array($query)){
+                                        ?>
+
+                                        <tr>
+                                        <th scope="row"><?php echo $res['workerid']; ?></th>
+                                        <td><?php echo $res['name']; ?></td>
+                                        <td><?php echo $res['duty']; ?></td>
+                                        <td><?php echo $res['phone']; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                            </tbody>
+                            </table>
+                    </div>
+                    <script>
+                            const targetDiv1 = document.getElementById("fourth");
+                                const btn1 = document.getElementById("toggle1");
+                                targetDiv1.style.display = "none";
+                                btn1.onclick = function () {
+                                if (targetDiv1.style.display !== "none") {
+                                    targetDiv1.style.display = "none";
+                                } else {
+                                    targetDiv1.style.display = "block";
+                                }
+                                };
+                            </script>
                 </div>
             </div>
         </div>
 
-        <div class="property-card row">
+        <!--<div class="property-card row">
             <div class="content-container col-md-8">
                 <div class="detail-container">
-                    <div class="property-name">Complain Box</div>
+                    <div class="property-name">Pay Maintenance</div>
                     <div class="property-address"></div>
                 </div>
                 <div class="row no-gutters">
@@ -96,93 +204,177 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
   
 
+    </div>
+    <div class="property-amenities">
+        <div class="page-container">
+            <h1>Amenities</h1>
+            <div class="row justify-content-between">
+                <div class="col-md-auto">
+                    <h5>Building</h5>
+                    <div class="amenity-container">
+                        <span>Power backup</span>
+                    </div>
+                    <div class="amenity-container">
+                        <span>Lift</span>
+                    </div>
+                </div>
+
+                <div class="col-md-auto">
+                    <h5>Common Area</h5>
+                    <div class="amenity-container">
+                        <span>Wifi</span>
+                    </div>
+                    <div class="amenity-container">
+                        <span>Sewage Tretment Plant</span>
+                    </div>
+                    <div class="amenity-container">
+                        <span>Gym</span>
+                    </div>
+                    <div class="amenity-container">
+                        <span>Sports Complex</span>
+                    </div>
+                    <div class="amenity-container">
+                        <span>Comunity Hall</span>
+                    </div>
+                </div>
+
+                <div class="col-md-auto">
+                    <h5>Residence Type</h5>
+                    <div class="amenity-container">
+                        <span>Flat | Bungalow |Pent House</span>
+                    </div>
+                    <div class="amenity-container">
+                        <span>Parking Space</span>
+                    </div>
+                </div>
+
+                <div class="col-md-auto">
+                    <h5>Interior Type</h5>
+                    <div class="amenity-container">
+                       <span>Italian Kitchen</span>
+                    </div>
+                    <div class="amenity-container">
+                      <span>Italian Washroom</span>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="property-about page-container">
+        <h1>About the Property</h1>
+        <p>Furnished studio apartment -! Located in posh area of Bijwasan in Delhi, this house is available for both bachelors and family. Go out with your new neighbores - catch a movie at the nearest cinema hall or just chill in a cafe which is not even 2 kms away. Unwind with your flatmates after a long day at work/college. With a common playground area and a shared Gym, Swimming pool, make your own FRIENDS/FAMILY moments. After all, there's always a Joey with unlimited supply of brotherhood. Remember, all it needs is one crazy story to convert a get together into a BFF. What's nearby/Your New Neighborhood 4.0 Kms from Dwarka Sector- 21 Metro Station.</p>
+    </div>
+
+    <div class="property-layout"></div>
+        <div class="page-container">
+            <h1>Residence Facilities</h1>
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md-6">
+                    <div class="Box3 row">
+                        <div class="col-6">
+                            <span class="criteria-text">Cleanlines</span>
+                        </div>
+                 </div>
+                    <div class="Box3 row">
+                        <div class="col-6">
+                           <span class="criteria-text">Grocery Store</span>
+                        </div>
+                     </div>
+                    <div class="Box3 row">
+                        <div class="col-6">
+                            <span class="criteria-text">Safety / Security</span>
+                        </div>
+                      </div>
+                </div>
+              </div>
+        </div>
     </div>
 
     <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="signup-heading">Register</h5>
+                    <h5 class="modal-title" id="signup-heading">Maintenance</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                 <div class="modal-body">
-                    <form id="signup-form" class="form" role="form" method="post" action="owner_submit.php">
+                    <form id="payment_form" class="form" role="form">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
                                     <i class="fas fa-user"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="full_name" placeholder="Full Name" maxlength="30" required>
+                            <input type="text" class="form-control" name="name" id="name" value="<?php echo $name;  ?>" maxlength="30" required>
                         </div>
 
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fas fa-phone-alt"></i>
+                                <i class="fas fa-rupee-sign"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="phone" placeholder="Phone Number" maxlength="10" minlength="10" required>
-                        </div>
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-envelope"></i>
-                                </span>
-                            </div>
-                            <input type="email" class="form-control" name="email" placeholder="Email" required>
-                        </div>
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-lock"></i>
-                                </span>
-                            </div>
-                            <input type="password" class="form-control" name="password" placeholder="Password" minlength="6" required>
-                        </div>
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-university"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="permanent_adress" placeholder="Permanent Adress" maxlength="150" required>
-                        </div>
-
-                        <!--<div class="form-group">__>
-                            <span>I'm a</span>
-                            <input type="radio" class="ml-3" id="gender-male" name="gender" value="male" /> Home Owner
-                            <label for="gender-male">
-                            </label>-->
-                            <!-- <input type="radio" class="ml-3" id="gender-female" name="gender" value="female" /> -->
-                            <!-- <label for="gender-female"> -->
-                                <!-- Female -->
-                            <!-- </label> -->
+                            <input type="text" class="form-control" name="amt" id="amt" placeholder="Enter amount" maxlength="10" minlength="3" required>
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-primary">Create Account</button>
+                            <input type="button" class="btn btn-block btn-primary" id="btn" name="btn" value="Pay Now" onclick="pay_now()">
                         </div>
                     </form>
                 </div>
 
-                <div class="modal-footer">
+                <!--<div class="modal-footer">
                     <span>Already have an account?
                         <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login-modal">Login</a>
                     </span>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
+    <script>
+        function pay_now(){
+            var name=jQuery('#name').val();
+        var amt=jQuery('#amt').val();
+        
+         jQuery.ajax({
+               type:'post',
+               url:'payment_process.php',
+               data:"amt="+amt+"&name="+name,
+               success:function(result){
+                   var options = {
+                        "key": "rzp_test_DUHXaQcH8wN9T9", 
+                        "amount": amt*100, 
+                        "currency": "INR",
+                        "name": "Ganpati Residence Bungalow",
+                        "description": "Test Transaction",
+                        "image": "https://st.hzcdn.com/simgs/dc015e9709772b15_4-1700/home-design.jpg ",
+                        "handler": function (response){
+                           jQuery.ajax({
+                               type:'post',
+                               url:'payment_process.php',
+                               data:"payment_id="+response.razorpay_payment_id,
+                               success:function(result){
+                                   console.log('Thank YOu');
+                               }
+                           });
+                        }
+                    };
+                    var rzp1 = new Razorpay(options);
+                    rzp1.open();
+               }
+           });
+        
+        
+    } 
+    </script>
 
     <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -293,6 +485,65 @@
             </div>
         </div>
     </div>
+    
+
+
+
+    <div class="modal fade" id="new-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signup-heading">Complaints</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="email_form" class="form" role="form" method="post" action="https://postmail.invotes.com/send">
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="subject" placeholder="subject" maxlength="30" required>
+                        </div>
+
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="extra_name" placeholder="Full Name" maxlength="30" required>
+                        </div>
+
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-phone-alt"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="extra_phone_number" placeholder="Phone Number" maxlength="10" minlength="10" required>
+                        </div>
+                        
+                        <div class="input-group form-group">
+                            <textarea name="text" placeholder="Complain" rows='6' column='100' style="width: 465px;" maxlength="250" minlength="10" required></textarea>
+                        </div>
+                        <input type="hidden" name="access_token" value="gliezzrug3mck2g1narqd4oq" />
+                        <input type="hidden" name="success_url" value=".?message=Email+Successfully+Sent%21&isError=0" />
+                        <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-primary" value="Send">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
    
     <div class="footer">
         <div class="page-container footer-container">
