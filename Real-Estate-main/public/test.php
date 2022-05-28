@@ -1,11 +1,4 @@
-<?php 
-session_start();
-$name=$_SESSION['User_id'];
-$phone=$_SESSION['phone'];
-$email=$_SESSION['email'];
-$password=$_SESSION['password'];
-$address=$_SESSION['address'];
-?>
+
 <!DOCTYPE html>
 <html>
 
@@ -41,18 +34,14 @@ $address=$_SESSION['address'];
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb py-2">
             <li class="breadcrumb-item">
-              <a href="#" data-toggle="popover" title="<?php echo $email ?>" data-content="<?php echo $phone ?>">Hi <?php echo $name ?></a>
+                <a href="index.html">Home</a> 
             </li>
             <!-- <li class="breadcrumb-item active" aria-current="page"> -->
                   <!--  -->
             <!-- </li> -->
         </ol>
     </nav>
-    <!--<script>
-            $(document).ready(function(){
-            $('[data-toggle="popover"]').popover();
-            });
-</script>-->
+
     <div class="header sticky-top">
         <nav class="navbar navbar-expand-md navbar-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#my-navbar">
@@ -76,12 +65,6 @@ $address=$_SESSION['address'];
                       <li class="nav-item"> 
                            <a class="nav-link" href="#" data-toggle="modal" data-target="#new-modal"> 
                            <i class="fas fa-user"></i>Complains/Suggestions
-                           </a>
-                      </li> 
-                    <div class="nav-vl"></div>
-                    <li class="nav-item"> 
-                           <a class="nav-link" href="#" data-toggle="modal" data-target="#rent-modal"> 
-                           <i class="fas fa-user"></i>Put on rent
                            </a>
                       </li> 
                     <div class="nav-vl"></div>
@@ -143,10 +126,10 @@ $address=$_SESSION['address'];
                     <div class="button-container col-6">
                     <button id="toggle1" class="btn btn-primary">View</button>
                     </div>
-                    <div id="fourth" class="table-responsive" width="auto">
+                    <div id="fourth" class="table-responsive">
                         <table class="table table-striped" >
                             <thead>
-                                <tr class="table-primary">
+                                <tr class="table-primary">>
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Duty</th>
@@ -327,7 +310,7 @@ $address=$_SESSION['address'];
                                     <i class="fas fa-user"></i>
                                 </span>
                             </div>
-                            <input type="text"  class="form-control" name="name" id="name" value="<?php echo $name;  ?>" maxlength="30" disabled="disabled" required>
+                            <input type="text"  class="form-control" name="name" id="name" placeholder="name" maxlength="30" required>
                         </div>
 
                         <div class="input-group form-group">
@@ -345,7 +328,7 @@ $address=$_SESSION['address'];
                                 <i class="fas fa-rupee-sign"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="flat" id="flat" placeholder="Flat no." maxlength="3" minlength="1" required>
+                            <input type="text" class="form-control" name="flat" id="flat" placeholder="Flat no." maxlength="10" minlength="3" required>
                         </div>
 
                         <div class="form-group">
@@ -369,7 +352,7 @@ $address=$_SESSION['address'];
         var flat=jQuery('#flat').val();
          jQuery.ajax({
                type:'post',
-               url:'payment_process.php',
+               url:'test2.php',
                data:"amt="+amt+"&name="+name+"&flat="+flat,
                success:function(result){
                    var options = {
@@ -403,21 +386,21 @@ $address=$_SESSION['address'];
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="signup-heading">Enter details where you want to change</h5>
+                  <h5 class="modal-title" id="signup-heading">Profile Update</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
               </div>
 
               <div class="modal-body">
-                  <form id="signup-form" class="form" role="form" method="post" action="update1.php">
+                  <form id="signup-form" class="form" role="form">
                       <div class="input-group form-group">
                           <div class="input-group-prepend">
                               <span class="input-group-text">
                                   <i class="fas fa-user"></i>
                               </span>
                           </div>
-                          <input type="text" class="form-control" name="full_name" value="<?php echo $name; ?>" maxlength="30" required>
+                          <input type="text" class="form-control" name="full_name" placeholder="Full Name" maxlength="30" required>
                       </div>
 
                       <div class="input-group form-group">
@@ -426,7 +409,7 @@ $address=$_SESSION['address'];
                                   <i class="fas fa-phone-alt"></i>
                               </span>
                           </div>
-                          <input type="text" class="form-control" name="phone" value="<?php echo $phone; ?>" maxlength="10" minlength="10" required>
+                          <input type="text" class="form-control" name="phone" placeholder="Phone Number" maxlength="10" minlength="10" required>
                       </div>
 
                       <div class="input-group form-group">
@@ -435,7 +418,7 @@ $address=$_SESSION['address'];
                                   <i class="fas fa-envelope"></i>
                               </span>
                           </div>
-                          <input type="email" class="form-control" name="email" value="<?php echo $email; ?>" required>
+                          <input type="email" class="form-control" name="email" placeholder="Email" required>
                       </div>
                       <div class="input-group form-group">
                         <div class="input-group-prepend">
@@ -443,11 +426,15 @@ $address=$_SESSION['address'];
                                 <i class="fas fa-lock"></i>
                             </span>
                         </div>
-                        <input type="password" class="form-control" name="password" value="<?php echo $password; ?>" minlength="6" required>
+                        <input type="password" class="form-control" name="password" placeholder="Password" minlength="6" required>
                     </div>
                       <div class="form-group">
                         <button type="submit" class="btn btn-block btn-primary">Update Account</button>
                       </div>  
+
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-block btn-primary">Delete Account</button>
+                      </div>
                   </form>
               </div>
 
@@ -474,11 +461,11 @@ $address=$_SESSION['address'];
                 </div>
 
                 <div class="modal-body">
-                <form id="email_form" class="form" role="form" action="https://formsubmit.co/1b7a088028e035e59ee8e2ca570b6d72" method="POST">
+                    <form id="email_form" class="form" role="form" method="post" action="https://postmail.invotes.com/send">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <i class="fas fa-pencil-alt"></i>
+                                    <i class="fas fa-user"></i>
                                 </span>
                             </div>
                             <input type="text" class="form-control" name="subject" placeholder="subject" maxlength="30" required>
@@ -490,15 +477,7 @@ $address=$_SESSION['address'];
                                     <i class="fas fa-user"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="name" value="<?php echo $name ?>" maxlength="30" required>
-                        </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-at"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="email" value="<?php echo $email ?>" maxlength="30" required>
+                            <input type="text" class="form-control" name="extra_name" placeholder="Full Name" maxlength="30" required>
                         </div>
 
                         <div class="input-group form-group">
@@ -507,70 +486,15 @@ $address=$_SESSION['address'];
                                     <i class="fas fa-phone-alt"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="number" value="<?php echo $phone ?>" maxlength="10" minlength="10" required>
+                            <input type="text" class="form-control" name="extra_phone_number" placeholder="Phone Number" maxlength="10" minlength="10" required>
                         </div>
                         
                         <div class="input-group form-group">
-                            <textarea name="Suggestion/Complain" placeholder="Complain" rows='6' column='100' style="width: 465px;" maxlength="250" minlength="10" required></textarea>
+                            <textarea name="text" placeholder="Complain" rows='6' column='100' style="width: 465px;" maxlength="250" minlength="10" required></textarea>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-primary" value="Send">Send</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="rent-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="signup-heading">Put on rent</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                <form id="rent_form" class="form" role="form" >
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="name" value="<?php echo $name ?>" maxlength="30" required>
-                        </div>
-                        
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-phone-alt"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="number" value="<?php echo $phone ?>" maxlength="10" minlength="10" required>
-                        </div>
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-home"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="housing" placeholder="Housing type" maxlength="30" required>
-                        </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-door-open"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="house_no" placeholder="Housing no" maxlength="30" required>
-                        </div>
-
-
-    
+                        <input type="hidden" name="access_token" value="gliezzrug3mck2g1narqd4oq" />
+                        <input type="hidden" name="success_url" value=".?message=Email+Successfully+Sent%21&isError=0" />
+                        <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
                         <div class="form-group">
                             <button type="submit" class="btn btn-block btn-primary" value="Send">Send</button>
                         </div>

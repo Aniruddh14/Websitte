@@ -13,17 +13,17 @@ if(isset($_POST['amt']) && isset($_POST['name']) && isset($_POST['flat'])){
     $flat=$_POST['flat'];
     $payment_status="pending";
     $added_on=date('Y-m-d h:i:s');
-    mysqli_query($conn,"insert into payment(name,flat,amount,payment_status,added_on) values('$name','$flat','$amt','$payment_status','$added_on')");
+    mysqli_query($conn,"insert into payment1(name,flat,amt,payment_status,added_on) values('$name','$flat','$amt','$payment_status','$added_on')");
     $_SESSION['OID']=mysqli_insert_id($conn);
 }
 
 
 if(isset($_POST['payment_id']) && isset($_SESSION['OID'])){
     $payment_id=$_POST['payment_id'];
-    mysqli_query($conn,"update payment set payment_status='complete',payment_id='$payment_id' where id='".$_SESSION['OID']."'");
+    mysqli_query($conn,"update payment1 set payment_status='complete',payment_id='$payment_id' where id='".$_SESSION['OID']."'");
 }
 
-
+mysqli_close ($conn);
 
 
 ?>

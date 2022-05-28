@@ -1,3 +1,12 @@
+<?php
+session_start();
+$name=$_SESSION['User_id'];
+$phone=$_SESSION['phone'];
+$email=$_SESSION['email'];
+$password=$_SESSION['password'];
+$address=$_SESSION['address'];
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -102,14 +111,61 @@
             <div class="property-address">Police Beat, Sainath Complex, Besides, SV Rd, Daulat Nagar, Borivali East, Mumbai - 400066</div>
             
         </div>
-        <div class="row no-gutters">
+        <div class="row no-gutters" align="right">
             <!-- <div class="rent-container col-6"> -->
                 <!-- <a href="owner.html" class="btn btn-primary">Home Owner</a>   -->
             <!-- </div> -->
-            <div class="button-container col-6"> 
-                <a href="Paymentpent.php" class="btn btn-primary">Book Now</a> 
-            </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <form id="payment_form">
+                            <input type="hidden"   name="name" id="name" value="<?php echo $name;  ?>" maxlength="30" required>
+                            <input type="hidden"  name="amt" id="amt" value="11000" maxlength="10" minlength="3" required>
+                            <input type="hidden"  name="type" id="type" value="PentHouse" maxlength="10" minlength="3" required>
+                            <input type="hidden"  name="phone" id="phone" value="<?php echo $phone;  ?>" maxlength="10" minlength="3" required>
+                        <div class="button-container col-6">
+                            <input type="button" class="btn btn-primary" id="btn" name="btn" value="Apply" onclick="pay_now()">
+                        </div>
+                    </form>
         </div>
+    </div>
+
+    <script>
+        function pay_now(){
+            var name=jQuery('#name').val();
+        var amt=jQuery('#amt').val();
+        var type=jQuery('#type').val();
+        var phone=jQuery('#phone').val();
+         jQuery.ajax({
+               type:'post',
+               url:'payment_pent.php',
+               data:"amt="+amt+"&name="+name+"&type="+type+"&phone="+phone,
+               success:function(result){
+                   var options = {
+                        "key": "rzp_test_DUHXaQcH8wN9T9", 
+                        "amount": amt*100, 
+                        "currency": "INR",
+                        "name": "Ganpati Residence Penthouse",
+                        "description": "Token Payment",
+                        "image": "https://st.hzcdn.com/simgs/dc015e9709772b15_4-1700/home-design.jpg ",
+                        "handler": function (response){
+                           jQuery.ajax({
+                               type:'post',
+                               url:'payment_pent.php',
+                               data:"payment_id="+response.razorpay_payment_id,
+                               success:function(result){
+                                   console.log('Thank YOu');
+                               }
+                           });
+                        }
+                    };
+                    var rzp1 = new Razorpay(options);
+                    rzp1.open();
+               }
+           });
+        
+        
+    } 
+    </script>
     </div>
 
     <div class="property-amenities">

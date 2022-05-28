@@ -1,17 +1,15 @@
 <?php 
 session_start();
 $name=$_SESSION['User_id'];
-$phone=$_SESSION['phone'];
 $email=$_SESSION['email'];
 $password=$_SESSION['password'];
-$address=$_SESSION['address'];
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TENANTS Home</title>
+    <title>Secretary Home</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" rel="stylesheet" />
@@ -41,7 +39,7 @@ $address=$_SESSION['address'];
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb py-2">
             <li class="breadcrumb-item">
-              <a href="#" data-toggle="popover" title="<?php echo $email ?>" data-content="<?php echo $phone ?>">Hi <?php echo $name ?></a>
+              <a href="#" disabled="disabled">Hi <?php echo $name ?></a>
             </li>
             <!-- <li class="breadcrumb-item active" aria-current="page"> -->
                   <!--  -->
@@ -63,7 +61,7 @@ $address=$_SESSION['address'];
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="modal" data-target="#signup-modal">
-                            <i class="fas fa-user"></i>Payment
+                            <i class="fas fa-user"></i>Payment details
                         </a>
                     </li>
                     <div class="nav-vl"></div> 
@@ -75,13 +73,7 @@ $address=$_SESSION['address'];
                     <div class="nav-vl"></div>
                       <li class="nav-item"> 
                            <a class="nav-link" href="#" data-toggle="modal" data-target="#new-modal"> 
-                           <i class="fas fa-user"></i>Complains/Suggestions
-                           </a>
-                      </li> 
-                    <div class="nav-vl"></div>
-                    <li class="nav-item"> 
-                           <a class="nav-link" href="#" data-toggle="modal" data-target="#rent-modal"> 
-                           <i class="fas fa-user"></i>Put on rent
+                           <i class="fas fa-user"></i>Tenant applications
                            </a>
                       </li> 
                     <div class="nav-vl"></div>
@@ -143,8 +135,8 @@ $address=$_SESSION['address'];
                     <div class="button-container col-6">
                     <button id="toggle1" class="btn btn-primary">View</button>
                     </div>
-                    <div id="fourth" class="table-responsive" width="auto">
-                        <table class="table table-striped" >
+                    <div id="fourth" class="table-responsive">
+                        <table class="table table-striped">
                             <thead>
                                 <tr class="table-primary">
                                 <th scope="col">ID</th>
@@ -308,50 +300,65 @@ $address=$_SESSION['address'];
         </div>
     </div>
 
-    <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+    <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true" >
+        <div class="modal-dialog" role="document" style="width : 100%;">
+            <div class="modal-content" style="width : 800px;" >
                 <div class="modal-header">
-                    <h5 class="modal-title" id="signup-heading">Maintenance</h5>
+                    <h5 class="modal-title" id="signup-heading">Maintenance Payment details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-                <div class="modal-body">
-                    <form id="payment_form" class="form" role="form">
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                            </div>
-                            <input type="text"  class="form-control" name="name" id="name" value="<?php echo $name;  ?>" maxlength="30" disabled="disabled" required>
-                        </div>
+                <div class="modal-body" >
+                <div id="fifth" class="table-responsive">
+                        <table class="table table-striped" >
+                            <thead>
+                                <tr class="table-primary">
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Flat</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Payment Status</th>
+                                <th scope="col">Payment_id</th>
+                                <th scope="col">added on</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                <i class="fas fa-rupee-sign"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="amt" id="amt" placeholder="Enter amount" maxlength="10" minlength="3" required>
-                        </div>
+                            <?php
+                                    $db_hostname = "127.0.0.1";
+                                    $db_username = "root";
+                                    $db_password = "";
+                                    $db_name = "website";
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                <i class="fas fa-rupee-sign"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="flat" id="flat" placeholder="Flat no." maxlength="3" minlength="1" required>
-                        </div>
+                                    $conn = mysqli_connect ($db_hostname, $db_username, $db_password, $db_name);
+                                    if (!$conn){
+                                        echo "Connection failed".mysqli_connect_error();
+                                        exit;
+                                    }
+                                    $selectquery = "select * from payment";
+                                    $query = mysqli_query($conn,$selectquery);
+                                    $num = mysqli_num_rows($query);
 
-                        <div class="form-group">
-                            <input type="button" class="btn btn-block btn-primary" id="btn" name="btn" value="Pay Now" onclick="pay_now()">
-                        </div>
-                    </form>
+
+                                    while($res = mysqli_fetch_array($query)){
+                                        ?>
+
+                                        <tr>
+                                        <th scope="row"><?php echo $res['id']; ?></th>
+                                        <td><?php echo $res['name']; ?></td>
+                                        <td><?php echo $res['flat']; ?></td>
+                                        <td><?php echo $res['amount']; ?></td>
+                                        <td><?php echo $res['payment_status']; ?></td>
+                                        <td><?php echo $res['payment_id']; ?></td>
+                                        <td><?php echo $res['added_on']; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                            </tbody>
+                            </table>
+                    </div>
                 </div>
 
                 <!--<div class="modal-footer">
@@ -362,42 +369,6 @@ $address=$_SESSION['address'];
             </div>
         </div>
     </div>
-    <script>
-        function pay_now(){
-            var name=jQuery('#name').val();
-        var amt=jQuery('#amt').val();
-        var flat=jQuery('#flat').val();
-         jQuery.ajax({
-               type:'post',
-               url:'payment_process.php',
-               data:"amt="+amt+"&name="+name+"&flat="+flat,
-               success:function(result){
-                   var options = {
-                        "key": "rzp_test_DUHXaQcH8wN9T9", 
-                        "amount": amt*100, 
-                        "currency": "INR",
-                        "name": "Ganpati Residence Bungalow",
-                        "description": "Maintenance Payment",
-                        "image": "https://st.hzcdn.com/simgs/dc015e9709772b15_4-1700/home-design.jpg ",
-                        "handler": function (response){
-                           jQuery.ajax({
-                               type:'post',
-                               url:'payment_process.php',
-                               data:"payment_id="+response.razorpay_payment_id,
-                               success:function(result){
-                                   console.log('Thank YOu');
-                               }
-                           });
-                        }
-                    };
-                    var rzp1 = new Razorpay(options);
-                    rzp1.open();
-               }
-           });
-        
-        
-    } 
-    </script>
 
     <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -410,7 +381,7 @@ $address=$_SESSION['address'];
               </div>
 
               <div class="modal-body">
-                  <form id="signup-form" class="form" role="form" method="post" action="update1.php">
+                  <form id="signup-form" class="form" role="form" method="post" action="updateadmin.php">
                       <div class="input-group form-group">
                           <div class="input-group-prepend">
                               <span class="input-group-text">
@@ -418,15 +389,6 @@ $address=$_SESSION['address'];
                               </span>
                           </div>
                           <input type="text" class="form-control" name="full_name" value="<?php echo $name; ?>" maxlength="30" required>
-                      </div>
-
-                      <div class="input-group form-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                  <i class="fas fa-phone-alt"></i>
-                              </span>
-                          </div>
-                          <input type="text" class="form-control" name="phone" value="<?php echo $phone; ?>" maxlength="10" minlength="10" required>
                       </div>
 
                       <div class="input-group form-group">
@@ -467,114 +429,64 @@ $address=$_SESSION['address'];
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="signup-heading">Complaints</h5>
+                    <h5 class="modal-title" id="signup-heading">Tenant applications</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
                 <div class="modal-body">
-                <form id="email_form" class="form" role="form" action="https://formsubmit.co/1b7a088028e035e59ee8e2ca570b6d72" method="POST">
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="subject" placeholder="subject" maxlength="30" required>
-                        </div>
+                <div id="fifth" class="table-responsive">
+                        <table class="table table-striped" >
+                            <thead>
+                                <tr class="table-primary">
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Payment Status</th>
+                                <th scope="col">Payment_id</th>
+                                <th scope="col">added on</th>
+                                <th scope="col">phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="name" value="<?php echo $name ?>" maxlength="30" required>
-                        </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-at"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="email" value="<?php echo $email ?>" maxlength="30" required>
-                        </div>
+                            <?php
+                                    $db_hostname = "127.0.0.1";
+                                    $db_username = "root";
+                                    $db_password = "";
+                                    $db_name = "website";
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-phone-alt"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="number" value="<?php echo $phone ?>" maxlength="10" minlength="10" required>
-                        </div>
-                        
-                        <div class="input-group form-group">
-                            <textarea name="Suggestion/Complain" placeholder="Complain" rows='6' column='100' style="width: 465px;" maxlength="250" minlength="10" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-primary" value="Send">Send</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="rent-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="signup-heading">Put on rent</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                <form id="rent_form" class="form" role="form" >
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="name" value="<?php echo $name ?>" maxlength="30" required>
-                        </div>
-                        
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-phone-alt"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="number" value="<?php echo $phone ?>" maxlength="10" minlength="10" required>
-                        </div>
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-home"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="housing" placeholder="Housing type" maxlength="30" required>
-                        </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-door-open"></i>
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="house_no" placeholder="Housing no" maxlength="30" required>
-                        </div>
+                                    $conn = mysqli_connect ($db_hostname, $db_username, $db_password, $db_name);
+                                    if (!$conn){
+                                        echo "Connection failed".mysqli_connect_error();
+                                        exit;
+                                    }
+                                    $selectquery = "select * from payment1";
+                                    $query = mysqli_query($conn,$selectquery);
+                                    $num = mysqli_num_rows($query);
 
 
-    
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-primary" value="Send">Send</button>
-                        </div>
-                    </form>
+                                    while($res = mysqli_fetch_array($query)){
+                                        ?>
+
+                                        <tr>
+                                        <th scope="row"><?php echo $res['id']; ?></th>
+                                        <td><?php echo $res['name']; ?></td>
+                                        <td><?php echo $res['housing_type']; ?></td>
+                                        <td><?php echo $res['amt']; ?></td>
+                                        <td><?php echo $res['payment_status']; ?></td>
+                                        <td><?php echo $res['payment_id']; ?></td>
+                                        <td><?php echo $res['added_on']; ?></td>
+                                        <td><?php echo $res['phone']; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                            </tbody>
+                            </table>
+                    </div>
                 </div>
             </div>
         </div>

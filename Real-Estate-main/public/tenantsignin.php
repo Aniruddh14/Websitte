@@ -1,3 +1,12 @@
+<?php
+session_start();
+$name=$_SESSION['User_id'];
+$phone=$_SESSION['phone'];
+$email=$_SESSION['email'];
+$password=$_SESSION['password'];
+$address=$_SESSION['address'];
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -46,14 +55,40 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb py-2">
-            <!--<li class="breadcrumb-item">
-                <a href="index.html">Home</a> 
-            </li>-->
+            <li class="breadcrumb-item">
+              <a href="#" data-toggle="popover" title="<?php echo $email ?>" data-content="<?php echo $phone ?>">Hi <?php echo $name ?></a>
+            </li>
             <!-- <li class="breadcrumb-item active" aria-current="page"> -->
                   <!--  -->
             <!-- </li> -->
         </ol>
     </nav>
+    <!--<script>
+            $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+            });
+</script>-->
+    <div class="header sticky-top">
+        <nav class="navbar navbar-expand-md navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#my-navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="my-navbar">
+                <ul class="navbar-nav">
+                        <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#signup-modal">
+                            <i class="fas fa-user"></i>Profile Update
+                        </a>
+                      <li class="nav-item"> 
+                           <a class="nav-link" href="#" data-toggle="modal" data-target="#edit-modal"> 
+                           <i class="fas fa-user"></i>Queries
+                           </a>
+                      </li> 
+                </ul>
+            </div>
+        </nav>
+    </div>
 
     <div class="page-container">
         <div class="property-card row">
@@ -117,13 +152,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="signup-heading">Register</h5>
+                    <h5 class="modal-title" id="signup-heading">Enter details where you want to update.</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-               <!-- <div class="modal-body">
+               <div class="modal-body">
                     <form id="signup-form" class="form" role="form" method="post" action = "tenant_submit.php">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
@@ -131,7 +166,7 @@
                                     <i class="fas fa-user"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="full_name" placeholder="Full Name" maxlength="30" required>
+                            <input type="text" class="form-control" name="full_name" value="<?php echo $name; ?>" maxlength="30" required>
                         </div>
 
                         <div class="input-group form-group">
@@ -140,7 +175,7 @@
                                     <i class="fas fa-phone-alt"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="phone" placeholder="Phone Number" maxlength="10" minlength="10" required>
+                            <input type="text" class="form-control" name="phone" value="<?php echo $phone; ?>" maxlength="10" minlength="10" required>
                         </div>
 
                         <div class="input-group form-group">
@@ -149,7 +184,7 @@
                                     <i class="fas fa-envelope"></i>
                                 </span>
                             </div>
-                            <input type="email" class="form-control" name="email" placeholder="Email" required>
+                            <input type="email" class="form-control" name="email" value="<?php echo $email; ?>" required>
                         </div>
 
                         <div class="input-group form-group">
@@ -158,7 +193,7 @@
                                     <i class="fas fa-lock"></i>
                                 </span>
                             </div>
-                            <input type="password" class="form-control" name="password" placeholder="Password" minlength="6" required>
+                            <input type="password" class="form-control" name="password" value="<?php echo $password; ?>" minlength="6" required>
                         </div>
 
                         <div class="input-group form-group">
@@ -167,34 +202,17 @@
                                     <i class="fas fa-university"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" name="address" placeholder="Permanent Adress" maxlength="150" required>
-                        </div>-->
+                            <input type="text" class="form-control" name="address" value="<?php echo $address; ?>" maxlength="150" required>
+                        </div>
 
-                        <!--<div class="form-group">
-                            <span>I'm a</span>
-                            <input type="radio" class="ml-3" id="gender-male" name="gender" value="male" /> Tanent
-                            <label for="gender-male">
-                            </label>-->
-                            <!-- <input type="radio" class="ml-3" id="gender-female" name="gender" value="female" /> -->
-                            <!-- <label for="gender-female"> -->
-                                <!-- Female -->
-                            <!-- </label> -->
-                       <!-- </div>
-
-                        <!--<div class="form-group">
-                            <button type="submit" class="btn btn-block btn-primary">Create Account</button>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-primary">Update</button>
                         </div>
                     </form>
                 </div>
-
-                <div class="modal-footer">
-                    <span>Already have an account?
-                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login-modal">Login</a>
-                    </span>
-                </div>
             </div>
         </div>
-    </div>-->
+    </div>
 
     <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -207,55 +225,49 @@
               </div>
 
               <div class="modal-body">
-                  <form id="signup-form" class="form" role="form">
-                      <div class="input-group form-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                  <i class="fas fa-user"></i>
-                              </span>
-                          </div>
-                          <input type="text" class="form-control" name="full_name" placeholder="Full Name" maxlength="30" required>
-                      </div>
-
-                      <div class="input-group form-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                  <i class="fas fa-phone-alt"></i>
-                              </span>
-                          </div>
-                          <input type="text" class="form-control" name="phone" placeholder="Phone Number" maxlength="10" minlength="10" required>
-                      </div>
-
-                      <div class="input-group form-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                  <i class="fas fa-envelope"></i>
-                              </span>
-                          </div>
-                          <input type="email" class="form-control" name="email" placeholder="Email" required>
-                      </div>
-                      <div class="input-group form-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fas fa-lock"></i>
-                            </span>
+              <form id="email_form" class="form" role="form" action="https://formsubmit.co/1b7a088028e035e59ee8e2ca570b6d72" method="POST">
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="subject" placeholder="subject" maxlength="30" required>
                         </div>
-                        <input type="password" class="form-control" name="password" placeholder="Password" minlength="6" required>
-                    </div>
-                      <div class="form-group">
-                        <button type="submit" class="btn btn-block btn-primary">Display Account</button>
-                      </div>  
 
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-block btn-primary">Delete Account</button>
-                      </div>
-                  </form>
-              </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="name" value="<?php echo $name ?>" maxlength="30" required>
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-at"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="email" value="<?php echo $email ?>" maxlength="30" required>
+                        </div>
 
-              <div class="modal-footer">
-                  <span>Use Owner Key as Password /
-                      <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login-modal">Login</a>
-                  </span>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-phone-alt"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="number" value="<?php echo $phone ?>" maxlength="10" minlength="10" required>
+                        </div>
+                        
+                        <div class="input-group form-group">
+                            <textarea name="query" placeholder="Complain" rows='6' column='100' style="width: 465px;" maxlength="250" minlength="10" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-primary" value="Send">Send</button>
+                        </div>
+                    </form>
               </div>
           </div>
       </div>
