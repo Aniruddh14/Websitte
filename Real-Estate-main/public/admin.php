@@ -76,6 +76,12 @@ $password=$_SESSION['password'];
                            <i class="fas fa-user"></i>Tenant applications
                            </a>
                       </li> 
+                      <div class="nav-vl"></div>
+                      <li class="nav-item"> 
+                           <a class="nav-link" href="#" data-toggle="modal" data-target="#rent-modal"> 
+                           <i class="fas fa-user"></i>For rent
+                           </a>
+                      </li> 
                     <div class="nav-vl"></div>
                 </ul>
             </div>
@@ -480,6 +486,67 @@ $password=$_SESSION['password'];
                                         <td><?php echo $res['payment_id']; ?></td>
                                         <td><?php echo $res['added_on']; ?></td>
                                         <td><?php echo $res['phone']; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                            </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rent-modal" tabindex="-1" role="dialog" aria-labelledby="signup-heading" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signup-heading">For rent</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                <div id="fifth" class="table-responsive">
+                        <table class="table table-striped" >
+                            <thead>
+                                <tr class="table-primary">
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">phone</th>
+                                <th scope="col">housing</th>
+                                <th scope="col">house_no</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            <?php
+                                    $db_hostname = "127.0.0.1";
+                                    $db_username = "root";
+                                    $db_password = "";
+                                    $db_name = "website";
+
+                                    $conn = mysqli_connect ($db_hostname, $db_username, $db_password, $db_name);
+                                    if (!$conn){
+                                        echo "Connection failed".mysqli_connect_error();
+                                        exit;
+                                    }
+                                    $selectquery = "select * from housing";
+                                    $query = mysqli_query($conn,$selectquery);
+                                    $num = mysqli_num_rows($query);
+
+
+                                    while($res = mysqli_fetch_array($query)){
+                                        ?>
+
+                                        <tr>
+                                        <th scope="row"><?php echo $res['id']; ?></th>
+                                        <td><?php echo $res['name']; ?></td>
+                                        <td><?php echo $res['phone']; ?></td>
+                                        <td><?php echo $res['housing']; ?></td>
+                                        <td><?php echo $res['housing_no']; ?></td>
                                         </tr>
                                         <?php
                                     }

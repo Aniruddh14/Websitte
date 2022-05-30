@@ -108,7 +108,8 @@ $address=$_SESSION['address'];
         <div class="detail-container">
             <div class="property-name">Ganpati Residence Bungalow</div>
             <div class="property-address">Police Beat, Sainath Complex, Besides, SV Rd, Daulat Nagar, Borivali East, Mumbai - 400066</div>
-            
+            <div class="property-address">For applying pay token amount if available the secretary will contact you.</div>
+            <div class="property-address">If no availability or owner rejects application money will be refunded.</div>
         </div>
         <div class="row no-gutters" align="right">
             <!-- <div class="rent-container col-6"> -->

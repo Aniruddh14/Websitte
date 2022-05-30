@@ -532,7 +532,7 @@ $address=$_SESSION['address'];
                 </div>
 
                 <div class="modal-body">
-                <form id="rent_form" class="form" role="form" >
+                <form id="rent_form" class="form" role="form" method="post" action="rent.php" >
 
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
